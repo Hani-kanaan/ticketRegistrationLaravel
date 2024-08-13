@@ -13,6 +13,6 @@ class Passenger extends Model
     protected $guarded = [];
 
     public  function flight(){
-        return $this->belongsToMany(Flight::class, 'flight_passenger');
+        return $this->belongsToMany(Flight::class , 'flight_passenger');
     }
 }
