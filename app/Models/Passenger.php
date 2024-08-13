@@ -10,9 +10,7 @@ class Passenger extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['FirstName',
-    'LastName', 'email', 'password', 'DOB',
-    'passport_expiry_date'];
+    protected $guarded = [];
 
     public  function flight(){
         return $this->belongsToMany(Flight::class, 'flight_passenger');

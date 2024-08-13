@@ -15,8 +15,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->date('dob');
-            $table->date('passport_expiry_date');
-            $table->softDeletes(); 
+            $table->dateTime('passport_expiry_date');
             $table->timestamps();  
         });
     }
