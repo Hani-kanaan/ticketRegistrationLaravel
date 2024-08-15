@@ -49,11 +49,11 @@ class FlightController extends Controller
     public function update(Request $request, Flight $flight)
     {
         $validatedData = $request->validate([
-            'number' => 'required|integer|unique:flights,number,' . $flight->id,
-            'departure_city' => 'required|string',
-            'arrival_city' => 'required|string',
-            'departure_time' => 'required|date',
-            'arrival_time' => 'required|date',
+            'number' => 'required',
+            'departure_city' => 'required',
+            'arrival_city' => 'required',
+            'departure_time' => 'required',
+            'arrival_time' => 'required',
         ]);
         $flight->update($validatedData);
             return response()->json($flight);
