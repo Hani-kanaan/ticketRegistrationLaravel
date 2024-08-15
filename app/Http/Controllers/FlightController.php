@@ -56,6 +56,6 @@ class FlightController extends Controller
             'arrival_time' => 'required',
         ]);
         $flight->update($validatedData);
-            return response()->json($flight);
+        return response()->json($flight);
     }
 }

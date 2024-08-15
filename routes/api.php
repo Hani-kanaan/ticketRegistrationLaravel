@@ -24,7 +24,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/users', [UserController::class, 'index']);
 Route::get('/flights', [FlightController::class, 'index']);
 Route::get('/flights/{flight}/passengers', [PassengerController::class, 'index']);
-Route::post('/flights/create', [FlightController::class, 'create']);
+Route::post('/flights', [FlightController::class, 'create']);
 Route::get('/flights/show/{flight}', [FlightController::class, 'show']);
-Route::get('/flights/destroy/{flight}', [FlightController::class, 'destroy']);
-Route::post('/flights/update/{flight}', [FlightController::class, 'update']);
+Route::delete('/flights/{flight}', [FlightController::class, 'destroy']);
+Route::put('/flights/{flight}', [FlightController::class, 'update']);
+
+Route::get('/users/{user}', [UserController::class, 'show']);
+Route::post('/users', [UserController::class, 'create']);
+Route::delete('/users/{user}', [UserController::class, 'destroy']);
+Route::put('/users/{user}', [UserController::class, 'update']);
