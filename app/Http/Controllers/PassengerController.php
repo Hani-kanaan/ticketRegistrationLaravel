@@ -7,10 +7,11 @@ use Illuminate\Http\Request;
 
 class PassengerController extends Controller
 {
-    public function index($flightId){
-        $flight = Flight::find($flightId);
-        $passengers = $flight->passenger;
+
+    public function index(Flight $flight)
+    {
+         
+        $passengers = $flight->passengers;
         return response()->json($passengers);
     }
-    
 }

@@ -11,7 +11,7 @@ class Flight extends Model
     use HasFactory;
     protected $guarded = [];
 
-    public function passenger(){
+    public function passengers(){
         return $this->belongsToMany(Passenger::class, 'flight_passenger');
 
     }
