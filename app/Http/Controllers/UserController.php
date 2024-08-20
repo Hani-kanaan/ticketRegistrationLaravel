@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\User;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -12,7 +13,7 @@ class UserController extends Controller
   {
 
     $users = QueryBuilder::for(User::class)
-      ->allowedFilters(AllowedFilter::partial('name'))
+      ->allowedFilters('name')
       ->defaultSort('-name')
       ->paginate(10);
     return response()->json($users);
@@ -26,16 +27,19 @@ class UserController extends Controller
   public function destroy(User $user)
   {
     $user->delete();
+    return response()->json('user deleted');
   }
 
-  public function create(Request $req)
+  public function store(Request $req)
   {
-    $user = new User;
-    $user->name = $req->name;
-    $user->email = $req->email;
-    $user->password = $req->password;
-    $user->save();
-    return redirect()->back();
+    $validatedData = $req->validate([
+      'name' => 'required',
+      'email' => 'required',
+      'password' => 'required',
+    ]);
+    $validatedData['password'] = bcrypt($validatedData['password']);
+    $user = User::create($validatedData);
+    return response('user created');
   }
 
   public function update(Request $request, User $user)

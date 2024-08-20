@@ -21,15 +21,20 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/users', [UserController::class, 'index']);
-Route::get('/flights', [FlightController::class, 'index']);
-Route::get('/flights/{flight}/passengers', [PassengerController::class, 'index']);
-Route::post('/flights', [FlightController::class, 'create']);
-Route::get('/flights/show/{flight}', [FlightController::class, 'show']);
-Route::delete('/flights/{flight}', [FlightController::class, 'destroy']);
-Route::put('/flights/{flight}', [FlightController::class, 'update']);
 
-Route::get('/users/{user}', [UserController::class, 'show']);
-Route::post('/users', [UserController::class, 'create']);
-Route::delete('/users/{user}', [UserController::class, 'destroy']);
-Route::put('/users/{user}', [UserController::class, 'update']);
+Route::resource('users', UserController::class);
+Route::resource('flights', FlightController::class);
+Route::get('/flights/{flight}/passengers', [PassengerController::class, 'index']);
+
+// Route::get('/users', [UserController::class, 'index']);
+// Route::get('/flights', [FlightController::class, 'index']);
+// Route::get('/flights/{flight}/passengers', [PassengerController::class, 'index']);
+// Route::post('/flights', [FlightController::class, 'store']);
+// Route::get('/flights/show/{flight}', [FlightController::class, 'show']);
+// Route::delete('/flights/{flight}', [FlightController::class, 'destroy']);
+// Route::put('/flights/{flight}', [FlightController::class, 'update']);
+
+// Route::get('/users/{user}', [UserController::class, 'show']);
+// Route::post('/users', [UserController::class, 'store']);
+// Route::delete('/users/{user}', [UserController::class, 'destroy']);
+// Route::put('/users/{user}', [UserController::class, 'update']);

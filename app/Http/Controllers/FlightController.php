@@ -13,9 +13,7 @@ class FlightController extends Controller
     {
 
         $flights = QueryBuilder::for(Flight::class)
-            ->allowedFilters(AllowedFilter::callback('number', function ($flights, $value) {
-                $flights->where('number', '>=', $value);
-            }))
+            ->allowedFilters('number')
             ->allowedSorts('number')
             ->defaultSort('-number')
             ->paginate(50);
@@ -31,19 +29,22 @@ class FlightController extends Controller
     public function destroy(Flight $flight)
     {
         $flight->delete();
+        return response('flight deleted');
     }
 
-    public function create(Request $req)
+    public function store(Request $req)
     {
-        $flight = new Flight;
-        $flight->number = $req->number;
-        $flight->departure_city = $req->departure_city;
-        $flight->arrival_city = $req->arrival_city;
-        $flight->departure_time = $req->departure_time;
-        $flight->arrival_time = $req->arrival_time;
 
-        $flight->save();
-        return redirect()->back();
+        $validatedData = $req->validate([
+            'number' => 'required|integer|unique:flights',
+            'departure_city' => 'required|string',
+            'arrival_city' => 'required|string',
+            'departure_time' => 'required|date',
+            'arrival_time' => 'required|date',
+        ]);
+        $flight = new Flight;
+        $flight = Flight::create($validatedData);
+        return response('flight created');
     }
 
     public function update(Request $request, Flight $flight)
