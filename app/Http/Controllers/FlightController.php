@@ -36,13 +36,12 @@ class FlightController extends Controller
     {
 
         $validatedData = $req->validate([
-            'number' => 'required|integer|unique:flights',
-            'departure_city' => 'required|string',
-            'arrival_city' => 'required|string',
-            'departure_time' => 'required|date',
-            'arrival_time' => 'required|date',
+            'number' => 'required',
+            'departure_city' => 'required',
+            'arrival_city' => 'required',
+            'departure_time' => 'required',
+            'arrival_time' => 'required',
         ]);
-        $flight = new Flight;
         $flight = Flight::create($validatedData);
         return response('flight created');
     }
