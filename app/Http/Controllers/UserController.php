@@ -5,20 +5,19 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\QueryBuilder;
-use Spatie\QueryBuilder\AllowedFilter;
 
 class UserController extends Controller
 {
+
   public function index()
   {
-
     $users = QueryBuilder::for(User::class)
       ->allowedFilters('name')
       ->defaultSort('-name')
       ->paginate(10);
+
     return response()->json($users);
   }
-
   public function show(User $user)
   {
     return response()->json($user);
@@ -36,6 +35,7 @@ class UserController extends Controller
       'name' => 'required',
       'email' => 'required',
       'password' => 'required',
+      'password_confirmation' => 'required'
     ]);
     $validatedData['password'] = bcrypt($validatedData['password']);
     $user = User::create($validatedData);
