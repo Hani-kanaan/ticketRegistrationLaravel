@@ -22,7 +22,7 @@ class PassengerFactory extends Factory
             'last_name' => $this->faker->lastName,
             'email' => $this->faker->unique()->safeEmail,
             'password' => Hash::make('password'),           
-            'dob' => $this->faker->date(),
+            'date_of_birth' => $this->faker->date(),
             'passport_expiry_date' => $this->faker->date('Y-m-d', 'now +10 years'),
         ];
     }

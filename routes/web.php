@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,12 +17,11 @@ use App\Http\Controllers\AuthController;
 */
 
 
-Route::middleware('auth:sanctum')->group(function () {
-    Route::post('/user')->middleware('login');
-    Route::post('/logout', [AuthController::class, 'logout']);
+Route::group(['middleware' => ['role:admin']], function () {
+    Route::get('/admin', [AdminController::class, 'index']);
 });
 
-Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login']);
+Route::get('/admin/init-roles-permissions', [AdminController::class, 'initializeRolesAndPermissions']);
+
 
 
