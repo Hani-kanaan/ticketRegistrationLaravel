@@ -1,32 +1,35 @@
 <?php
+
 namespace App\Http\Controllers;
 
 
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use App\Models\User;
+use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
     public function initializeRolesAndPermissions()
     {
-        // Creating permissions
-       // Permission::create(['name' => 'edit flight']);
-      //  Permission::create(['name' => 'delete flight']);
 
-        // Creating roles and assigning existing permissions
-        $role = Role::create(['name' => 'editor']);
+        Permission::create(['name' => 'add flight']);
+        Permission::create(['name' => 'update flight']);
+        Permission::create(['name' => 'delete flight']);
+        $role = Role::create(['name' => 'admin']);
         $role->givePermissionTo('delete flight');
-
-        // Assigning a role to a user
-        $user = User::find(2);
-        if ($user) {
-            $user->assignRole('editor');
-
-            // Assigning a permission directly to a user
-            $user->givePermissionTo('delete articles');
-        }
-
+        $role->givePermissionTo('add flight');
+        $role->givePermissionTo('update flight');
         return response()->json(['message' => 'Roles and permissions initialized']);
+    }
+
+    public function assignRole(Request $request)
+    {
+        $id = $request->id;
+        $user = User::find($id);
+        if ($user) {
+            $user->assignRole('admin');
+            return response('role assigned');
+        }
     }
 }

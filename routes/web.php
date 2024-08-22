@@ -21,7 +21,8 @@ Route::group(['middleware' => ['role:admin']], function () {
     Route::get('/admin', [AdminController::class, 'index']);
 });
 
-Route::get('/admin/init-roles-permissions', [AdminController::class, 'initializeRolesAndPermissions']);
+Route::post('/admin/init-roles-permissions', [AdminController::class, 'initializeRolesAndPermissions']);
+Route::post('/admin/assignRole', [AdminController::class, 'assignRole'])->middleware('auth:sanctum');
 
 
 
