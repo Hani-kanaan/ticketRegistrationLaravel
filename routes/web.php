@@ -21,8 +21,7 @@ Route::group(['middleware' => ['role:admin']], function () {
     Route::get('/admin', [AdminController::class, 'index']);
 });
 
-Route::post('/admin/init-roles-permissions', [AdminController::class, 'initializeRolesAndPermissions']);
-Route::post('/admin/assignRole', [AdminController::class, 'assignRole']);
+
 
 
 

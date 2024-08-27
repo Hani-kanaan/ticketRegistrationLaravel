@@ -1,11 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\RateLimiter;
+use App\Exports\UsersExport;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel; 
 use Spatie\QueryBuilder\QueryBuilder;
-
 class UserController extends Controller
 {
 
@@ -29,13 +30,13 @@ class UserController extends Controller
     return response()->json('user deleted');
   }
 
-  public function store(Request $req)
+  public function store(Request $request)
   {
-    $validatedData = $req->validate([
+    $validatedData = $request->validate([
       'name' => 'required',
       'email' => 'required',
       'password' => 'required',
-      'password_confirmation' => 'required'
+      'password_confirmation' => ['required', 'confirmed'],
     ]);
     $validatedData['password'] = bcrypt($validatedData['password']);
     $user = User::create($validatedData);
@@ -48,9 +49,14 @@ class UserController extends Controller
       'name' => 'required',
       'email' => 'required',
       'password' => 'required',
-      'password_confirmation' => 'required'
+      'password_confirmation' => ['required', 'confirmed'],
     ]);
     $user->update($validatedData);
     return response()->json($user);
   }
+
+//   public function export()
+//   {
+//     return Excel::download(new UsersExport, 'users.xlsx');
+// }
 }
