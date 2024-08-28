@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Flight;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class FlightController extends Controller
@@ -11,11 +12,15 @@ class FlightController extends Controller
     public function index()
     {
 
-        $flights = QueryBuilder::for(Flight::class)
-            ->allowedFilters('number')
-            ->allowedSorts('number')
-            ->defaultSort('-number')
-            ->paginate(50);
+        $cacheKey = 'flights';
+
+        $flights = Cache::remember($cacheKey, 60, function () {
+            return QueryBuilder::for(Flight::class)
+                ->allowedFilters('number')
+                ->allowedSorts('number')
+                ->defaultSort('-number')
+                ->paginate(50);
+        });
         return response()->json($flights);
     }
 

@@ -22,10 +22,10 @@ use App\Http\Controllers\PassengerController;
 */
 
 Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
-    Route::resource('flights', FlightController::class);
     Route::resource('users', UserController::class);
 
 });
+Route::resource('flights', FlightController::class);
 
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 Route::post('/register', [AuthController::class, 'register']);
