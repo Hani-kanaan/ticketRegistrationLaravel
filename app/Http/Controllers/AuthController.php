@@ -39,12 +39,7 @@ class AuthController extends Controller
     public function login(Request $request)
     {
 
-        $key = 'login:' . $request->ip();
-
-        $executed = RateLimiter::attempt(
-            $key,
-            $perMinute = 5,
-            function () use ($request) {
+           
                 $credentials = $request->validate([
                     'email' => ['required', 'email'],
                     'password' => ['required'],
@@ -59,14 +54,7 @@ class AuthController extends Controller
                 // Create and return the token directly
                 $token = $user->createToken('auth_token')->plainTextToken;
                 return $token;
-            }
-        );
-
-        if (! $executed) {
-            return response()->json([
-                'message' => 'Too many login attempts. Please try again later.'
-            ], 429);
-        }
+            
 
         // Return successful response with the token
         return response()->json([

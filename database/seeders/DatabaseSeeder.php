@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
         FlightSeeder::class,
         PassengerSeeder::class,
         UserSeeder::class,
+        FlightPassengerSeeder::class,
     ]);
 
     }
