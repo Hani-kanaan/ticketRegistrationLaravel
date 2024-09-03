@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Support\Facades\RateLimiter;
 use App\Exports\UsersExport;
 use App\Models\User;
 use Illuminate\Http\Request;

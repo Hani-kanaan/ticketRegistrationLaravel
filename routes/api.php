@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FlightController;
+use App\Http\Controllers\ImportController;
 use App\Http\Controllers\PassengerController;
 
 
@@ -33,3 +34,5 @@ Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:up
 Route::get('/flights/{flight}/passengers', [PassengerController::class, 'index']);
 
 Route::get('/export-users', [UserController::class, 'export']);
+
+Route::post('/import', [ImportController::class, 'import']);
