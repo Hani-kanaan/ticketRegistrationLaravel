@@ -1,12 +1,17 @@
 <?php
-/*use Maatwebsite\Excel\Concerns\FromCollection;
- use App\Models\User;
 
- class UsersExport implements FromCollection  
+namespace App\Exports;
 
- {
-     public function collection()
-     {
-         return User::all();
-     }
- }
+use App\Models\User;
+use Maatwebsite\Excel\Concerns\FromCollection;
+
+class UsersExport implements FromCollection
+{
+    /**
+    * @return \Illuminate\Support\Collection
+    */
+    public function collection()
+    {
+        return User::all();
+    }
+}
