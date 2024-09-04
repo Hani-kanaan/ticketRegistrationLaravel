@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\PassengerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,7 +21,7 @@ use App\Http\Controllers\AdminController;
 Route::group(['middleware' => ['role:admin']], function () {
     Route::get('/admin', [AdminController::class, 'index']);
 });
-
+Route::post('/photos', [PassengerController::class, 'store']);
 
 
 

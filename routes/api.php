@@ -36,3 +36,4 @@ Route::get('/flights/{flight}/passengers', [PassengerController::class, 'index']
 Route::get('/export-users', [UserController::class, 'export']);
 
 Route::post('/import', [ImportController::class, 'import']);
+Route::post('/photos', [PassengerController::class, 'storeImage']);
