@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\UsersExport;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Maatwebsite\Excel\Facades\Excel; 
 use Spatie\QueryBuilder\QueryBuilder;
 
 class UserController extends Controller
@@ -36,8 +34,8 @@ class UserController extends Controller
     $validatedData = $request->validate([
       'name' => 'required',
       'email' => 'required',
-      'password' => 'required',
-      'password_confirmation' => ['required', 'confirmed'],
+      'password' => ['required', 'confirmed'] , 
+      'password_confirmation' =>'required',
     ]);
     $validatedData['password'] = bcrypt($validatedData['password']);
     $user = User::create($validatedData);
@@ -56,8 +54,5 @@ class UserController extends Controller
     return response()->json($user);
   }
 
-  public function export()
-  {
-    return Excel::download(new UsersExport, 'users.xlsx');
-  }
+ 
 }

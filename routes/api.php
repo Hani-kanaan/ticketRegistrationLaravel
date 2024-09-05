@@ -1,14 +1,12 @@
 <?php
 
-use App\Exports\UsersExport;
-use Illuminate\Http\Request;
-use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FlightController;
-use App\Http\Controllers\ImportController;
 use App\Http\Controllers\PassengerController;
+use App\Http\Controllers\ExportUserController;
+use App\Http\Controllers\ImportUserController;
 
 
 /*
@@ -30,10 +28,8 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
 
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:uploads');
-Route::get('/flights/{flight}/passengers', [PassengerController::class, 'index']);
-
-Route::get('/export-users', [UserController::class, 'export']);
-
-Route::post('/import', [ImportController::class, 'import']);
-Route::post('/photos', [PassengerController::class, 'storeImage']);
+Route::post('/login', [AuthController::class, 'login'])->middleware('web');
+Route::get('/flights/{flight}/passengers', [PassengerController::class, 'index'])->middleware('auth:sanctum' , 'secure.headers');
+Route::get('/export-users', [ExportUserController::class, 'export'])->middleware('auth:sanctum');
+Route::post('/users/import', [ImportUserController::class, 'import'])->middleware('auth:sanctum');
+Route::post('/passenger-image/store', [PassengerController::class, 'storeImage'])->middleware('auth:sanctum');

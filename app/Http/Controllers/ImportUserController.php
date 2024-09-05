@@ -7,7 +7,7 @@ use App\Imports\UsersImport;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
-class ImportController extends Controller
+class ImportUserController extends Controller
 {
     public function import(Request $request)
     {

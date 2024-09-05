@@ -21,7 +21,6 @@ use App\Http\Controllers\PassengerController;
 Route::group(['middleware' => ['role:admin']], function () {
     Route::get('/admin', [AdminController::class, 'index']);
 });
-Route::post('/photos', [PassengerController::class, 'store']);
 
 
 
