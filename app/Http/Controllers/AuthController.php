@@ -39,33 +39,18 @@ class AuthController extends Controller
             'email' => ['required', 'email'],
             'password' => ['required'],
         ]);
-        $user = User::where('email', $request->email)->first();
-        if (!$user || !Hash::check($request->password, $user->password)) {
-            return false;
-        }
-        $request->session()->regenerate();
 
-        // Store user_id in the session
-        $request->session()->put('user_id', $user->id);
-        return $user->id;
-    return session()->get('user_id');
-        // Destroy other sessions for the same user
-        $currentSessionId = Session::getId();
-        DB::table('sessions')
-            ->where('user_id', $user->id)
-            ->where('id', '!=', $currentSessionId)
-            ->delete();
-            
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user || !Hash::check($request->password, $user->password)) {
+            return response()->json(['message' => 'Invalid credentials'], 401);
+        }
         $user->tokens()->delete();
         $token = $user->createToken('auth_token')->plainTextToken;
         return response()->json([
             'message' => 'Logged in successfully',
             'token' => $token,
+
         ]);
-    }
-    public function logout(Request $request)
-    {
-        $request->user()->currentAccessToken()->delete();
-        return response()->json(['message' => 'Successfully logged out']);
     }
 }
