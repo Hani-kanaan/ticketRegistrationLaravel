@@ -2,13 +2,7 @@
 
 namespace App\Http;
 
-use Carbon\Carbon;
-use App\Models\Flight;
-use App\Mail\FlightReminder;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Console\Scheduling\Schedule;
+use App\Http\Middleware\SanitizeInputMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -49,6 +43,7 @@ class Kernel extends HttpKernel
         'api' => [
             \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
             'throttle:api',
+            SanitizeInputMiddleware::class, 
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
 
@@ -73,7 +68,7 @@ class Kernel extends HttpKernel
         'signed' => \App\Http\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'role' => \App\Http\Middleware\EnsureUserHasRole::class, // Add your custom middleware here
+        'role' => \App\Http\Middleware\EnsureUserHasRole::class,  
     ];
    
 
